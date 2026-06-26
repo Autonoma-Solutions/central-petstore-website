@@ -47,7 +47,7 @@ const promos = [
 export default function PromoSection() {
   return (
     <section className="py-12 md:py-16" style={{ background: '#F5F7FA' }}>
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Section header */}
         <div className="flex items-center justify-between mb-8">

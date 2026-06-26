@@ -63,7 +63,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 shadow-md">
       {/* ROW 1 - White bar */}
       <div className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
+        <div className="max-w-[1400px] mx-auto px-6 py-2 flex items-center gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <div
@@ -142,7 +142,7 @@ export default function Navbar() {
 
       {/* ROW 2 - Dark blue nav bar (desktop) */}
       <nav className="hidden md:block" style={{ background: '#0A2A8A' }}>
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-[1400px] mx-auto px-6">
           <ul className="flex items-center">
             {menuItems.map((item) => (
               <li key={item.label} className="relative group">
