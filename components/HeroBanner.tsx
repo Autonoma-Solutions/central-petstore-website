@@ -34,28 +34,10 @@ const slides: Slide[] = [
     bgColor: '#EEF5FF',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=380&h=380&fit=crop&auto=format',
-        alt: 'Anjing Golden Retriever',
-        className: 'rounded-2xl border-4 border-white shadow-2xl',
-        style: { position: 'absolute', width: 200, height: 200, bottom: 24, right: 60, zIndex: 20 },
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=280&h=280&fit=crop&auto=format',
-        alt: 'Kucing',
-        className: 'rounded-2xl border-4 border-white shadow-xl',
-        style: { position: 'absolute', width: 150, height: 150, top: 10, left: 20, zIndex: 30 },
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=340&h=200&fit=crop&auto=format',
-        alt: 'Aquarium',
-        className: 'rounded-2xl shadow-lg',
-        style: { position: 'absolute', width: 190, height: 120, bottom: 0, left: 0, zIndex: 10 },
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=220&h=160&fit=crop&auto=format',
-        alt: 'Pancing',
-        className: 'rounded-2xl border-4 border-white shadow-lg',
-        style: { position: 'absolute', width: 140, height: 100, top: 20, right: 10, zIndex: 25 },
+        src: 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets/hero-slide-1.png',
+        alt: 'Anjing Kucing Aquarium Pancing',
+        className: 'rounded-2xl shadow-2xl',
+        style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: 10 },
       },
     ],
   },

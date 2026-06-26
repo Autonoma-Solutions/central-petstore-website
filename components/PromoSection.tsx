@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 
+const SUPABASE = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+
 const promos = [
   {
     id: 1,
@@ -12,19 +14,19 @@ const promos = [
     desc: 'Filter, pompa, lampu LED, dan semua kebutuhan aquarium',
     btn: 'Belanja Sekarang',
     href: '/aquarium',
-    emoji: '🐠',
+    image: `${SUPABASE}/promo-aquarium.png`,
     tag: 'Terbatas!',
   },
   {
     id: 2,
     bg: 'linear-gradient(135deg, #FFA726, #F57C00)',
     badge: '🐾 PETSHOP',
-    title: 'PAKET HEMAT',
+    title: 'PAKET HEMAT PETSHOP',
     subtitle: 'Mulai dari Rp 99.000',
     desc: 'Makanan, shampoo, vitamin, dan aksesoris hewan peliharaan',
     btn: 'Lihat Paket',
     href: '/petshop',
-    emoji: '🐶',
+    image: `${SUPABASE}/promo-petshop.png`,
     tag: 'Best Seller!',
   },
   {
@@ -36,7 +38,7 @@ const promos = [
     desc: 'Joran, reel, senar, metal jig, dan perlengkapan memancing',
     btn: 'Belanja Sekarang',
     href: '/pancing',
-    emoji: '🎣',
+    image: `${SUPABASE}/promo-pancing.png`,
     tag: 'Promo Spesial!',
   },
 ]
@@ -104,8 +106,19 @@ export default function PromoSection() {
                     </Link>
                   </div>
 
-                  {/* Big emoji */}
-                  <div className="text-6xl ml-4 opacity-80 select-none">{promo.emoji}</div>
+                  {/* Promo image */}
+                  <div className="shrink-0 ml-3 w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden">
+                    <img
+                      src={promo.image}
+                      alt={promo.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        const el = e.target as HTMLImageElement
+                        el.style.display = 'none'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
