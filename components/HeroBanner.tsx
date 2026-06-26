@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const SUPABASE = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
@@ -14,12 +14,12 @@ const slides = [
   },
   {
     id: 2,
-    src: 'https://images.unsplash.com/photo-1559825481-12a05cc00344?w=1400&h=380&fit=crop&auto=format',
+    src: 'https://images.unsplash.com/photo-1559825481-12a05cc00344?w=1400&h=500&fit=crop&auto=format',
     alt: 'Koleksi Aquarium Terlengkap',
   },
   {
     id: 3,
-    src: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=1400&h=380&fit=crop&auto=format',
+    src: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=1400&h=500&fit=crop&auto=format',
     alt: 'Peralatan Pancing Pilihan',
   },
 ]
@@ -48,29 +48,26 @@ export default function HeroBanner() {
     <section className="w-full py-3" style={{ background: '#F5F7FA' }}>
       <div className="max-w-[1600px] mx-auto px-4">
 
-        {/* ── Banner image container ── */}
-        <div
-          className="relative overflow-hidden rounded-2xl"
-          style={{ height: 380 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={slides[current].id}
-              src={slides[current].src}
-              alt={slides[current].alt}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="absolute inset-0 w-full h-full object-contain"
-              loading="eager"
-              onError={(e) => {
-                const el = e.target as HTMLImageElement
-                el.style.background = 'linear-gradient(135deg, #EEF5FF 0%, #D6EAFF 100%)'
-                el.src = ''
-              }}
-            />
-          </AnimatePresence>
+        {/* ── Banner image container — tinggi mengikuti aspect ratio gambar ── */}
+        <div className="relative overflow-hidden rounded-2xl w-full">
+
+          {/* Image — natural aspect ratio, no fixed height */}
+          <motion.img
+            key={current}
+            src={slides[current].src}
+            alt={slides[current].alt}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-auto block"
+            loading="eager"
+            onError={(e) => {
+              const el = e.target as HTMLImageElement
+              el.style.minHeight = '280px'
+              el.style.background = 'linear-gradient(135deg, #EEF5FF 0%, #D6EAFF 100%)'
+              el.src = ''
+            }}
+          />
 
           {/* Arrow prev */}
           <button
@@ -91,7 +88,7 @@ export default function HeroBanner() {
           </button>
         </div>
 
-        {/* ── Dots (di luar gambar, di bawah) ── */}
+        {/* ── Dots di bawah gambar ── */}
         <div className="flex items-center justify-center gap-1.5 mt-2.5">
           {slides.map((_, i) => (
             <button
