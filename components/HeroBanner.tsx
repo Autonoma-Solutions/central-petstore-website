@@ -46,7 +46,7 @@ export default function HeroBanner() {
 
   return (
     <section className="w-full py-3" style={{ background: '#F5F7FA' }}>
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="w-full px-4">
 
         {/* ── Banner image container ── */}
         <div
