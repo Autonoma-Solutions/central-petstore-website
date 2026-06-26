@@ -28,7 +28,7 @@ const bantuanLinks = [
 export default function Footer() {
   return (
     <footer style={{ background: '#0A2A8A' }}>
-      <div className="max-w-[1400px] mx-auto px-6 py-12">
+      <div className="max-w-[1600px] mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Col 1: Logo & Deskripsi */}
           <div className="lg:col-span-2">
@@ -172,7 +172,7 @@ export default function Footer() {
 
       {/* Copyright bar */}
       <div style={{ background: 'rgba(0,0,0,0.25)' }}>
-        <div className="max-w-[1400px] mx-auto px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="max-w-[1600px] mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
             © 2024 Central Petstore. All Rights Reserved.
           </p>

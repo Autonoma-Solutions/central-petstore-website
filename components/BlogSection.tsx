@@ -81,7 +81,7 @@ export default function BlogSection() {
 
   return (
     <section className="py-12 md:py-16" style={{ background: '#F5F7FA' }}>
-      <div className="max-w-[1400px] mx-auto px-6">
+      <div className="max-w-[1600px] mx-auto px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: '#0A2A8A' }}>
