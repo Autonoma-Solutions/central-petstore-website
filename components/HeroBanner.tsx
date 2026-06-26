@@ -75,7 +75,7 @@ export default function HeroBanner() {
   const slide = slides[current]
 
   return (
-    <section className="relative overflow-hidden w-full" style={{ minHeight: 380 }}>
+    <section className="relative overflow-hidden w-full" style={{ height: 420, maxHeight: 420 }}>
 
       {/* ── Background image ── */}
       <AnimatePresence mode="wait">
@@ -91,7 +91,7 @@ export default function HeroBanner() {
             src={slide.bgImage}
             alt={slide.imageOnly ? 'Central Petstore Hero Banner' : (slide as { badge: string }).badge}
             className="w-full h-full object-cover"
-            style={{ minHeight: 380 }}
+            style={{ height: '100%', display: 'block' }}
             loading="eager"
             onError={(e) => {
               const el = e.target as HTMLImageElement
@@ -111,7 +111,7 @@ export default function HeroBanner() {
       </AnimatePresence>
 
       {/* ── Content layer ── */}
-      <div className="relative z-10" style={{ minHeight: 380 }}>
+      <div className="relative z-10" style={{ height: 420 }}>
         <div className="max-w-7xl mx-auto px-6 md:px-10" style={{ paddingTop: 48, paddingBottom: 80 }}>
 
           {/* Teks overlay hanya untuk slide NON imageOnly */}
@@ -174,7 +174,7 @@ export default function HeroBanner() {
 
         {/* ── CTA buttons untuk slide imageOnly (posisi bottom-left) ── */}
         {slide.imageOnly && (
-          <div className="absolute bottom-14 left-6 md:left-10 flex flex-wrap gap-3">
+          <div className="absolute bottom-12 left-6 md:left-10 flex flex-wrap gap-3">
             <a
               href="/petshop"
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-semibold shadow-xl hover:opacity-90 transition-opacity text-sm"
