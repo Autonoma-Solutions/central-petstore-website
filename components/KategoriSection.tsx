@@ -99,12 +99,11 @@ export default function KategoriSection() {
                 </ul>
 
                 {/* Right: product photo */}
-                <div className="shrink-0 w-28 rounded-xl overflow-hidden bg-gray-100">
+                <div className="shrink-0 w-40 h-40 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
                   <img
                     src={cat.photo}
                     alt={cat.photoAlt}
-                    className="w-full h-full object-cover"
-                    style={{ minHeight: 140 }}
+                    className="w-full h-full object-contain"
                     loading="lazy"
                     onError={(e) => {
                       const el = e.target as HTMLImageElement
