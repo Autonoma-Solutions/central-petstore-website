@@ -67,7 +67,7 @@ export default function KategoriSection() {
   return (
     <section className="py-12 md:py-16" style={{ background: '#F5F7FA' }}>
       <div className="max-w-7xl mx-auto px-4">
-        {/* 3 Cards */
+        {/* 3 Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {categories.map((cat) => (
             <div
