@@ -72,20 +72,24 @@ export default function KategoriSection() {
           {categories.map((cat) => (
             <div
               key={cat.label}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col"
+              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col relative"
             >
-              {/* Card Header — icon kecil inline + judul UPPERCASE */}
-              <div className="flex items-center gap-2 px-5 pt-5 pb-3">
-                <span className="text-2xl leading-none">{cat.icon}</span>
+              {/* Card Header — icon dalam lingkaran biru + judul UPPERCASE */}
+              <div className="flex items-center gap-3 px-5 pt-5 pb-3">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{ background: '#0A2A8A' }}
+                >
+                  <span className="text-lg leading-none">{cat.icon}</span>
+                </div>
                 <h3 className="font-extrabold text-xl uppercase leading-tight tracking-wide" style={{ color: '#0A2A8A' }}>
                   {cat.label}
                 </h3>
               </div>
 
-              {/* Card Body — 2 column: list kiri + foto kanan */}
-              <div className="flex flex-1 p-4 gap-3">
-                {/* Left: item list */}
-                <ul className="flex-1 space-y-1.5 min-w-0">
+              {/* Card Body — list kiri, foto absolute bottom-right */}
+              <div className="flex-1 pl-5 pr-48 pb-2">
+                <ul className="space-y-1.5">
                   {cat.items.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-gray-600">
                       <CheckCircle
@@ -93,36 +97,34 @@ export default function KategoriSection() {
                         className="shrink-0"
                         style={{ color: cat.checkColor }}
                       />
-                      <span className="truncate">{item}</span>
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-
-                {/* Right: product photo */}
-                <div className="shrink-0 w-40 h-40 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
-                  <img
-                    src={cat.photo}
-                    alt={cat.photoAlt}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                    onError={(e) => {
-                      const el = e.target as HTMLImageElement
-                      el.src = `https://placehold.co/200x260/${cat.color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(cat.photoFallback)}`
-                    }}
-                  />
-                </div>
               </div>
 
-              {/* Card Footer — Lihat Semua button (outline kecil, tidak full width) */}
-              <div className="px-5 pb-5">
+              {/* Card Footer — Lihat Semua button */}
+              <div className="px-5 pb-5 pt-3">
                 <Link
                   href={cat.href}
-                  className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 hover:bg-blue-500 hover:text-white hover:border-blue-500"
-                  style={{ borderColor: '#39A7FF', color: '#39A7FF' }}
+                  className="inline-block px-5 py-2 rounded-full text-xs font-semibold border-2 transition-all duration-200 hover:bg-blue-800 hover:text-white"
+                  style={{ borderColor: '#0A2A8A', color: '#0A2A8A' }}
                 >
                   Lihat Semua
                 </Link>
               </div>
+
+              {/* Foto produk — absolute bottom-right menyentuh tepi card */}
+              <img
+                src={cat.photo}
+                alt={cat.photoAlt}
+                className="absolute bottom-0 right-0 w-44 h-44 object-contain"
+                loading="lazy"
+                onError={(e) => {
+                  const el = e.target as HTMLImageElement
+                  el.src = `https://placehold.co/200x260/${cat.color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(cat.photoFallback)}`
+                }}
+              />
             </div>
           ))}
         </div>
