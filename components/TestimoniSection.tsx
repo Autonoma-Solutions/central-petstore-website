@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { Star } from 'lucide-react'
 import { supabase, type Testimonial } from '@/lib/supabase'
 
-const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
-const APP_LOGO_ICON = `${ASSETS}/app-logo-without-text.png`
+const APP_LOGO_ICON = '/app-logo-without-text.png'
 
 export default function TestimoniSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])

@@ -12,8 +12,7 @@ import {
   Home,
 } from 'lucide-react'
 
-const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
-const APP_LOGO = `${ASSETS}/app-logo.png`
+const APP_LOGO = '/app-logo.png'
 
 const menuItems = [
   { label: 'Beranda', href: '/', icon: <Home size={14} />, dropdown: null },

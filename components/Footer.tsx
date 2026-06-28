@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
 
-const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
-const APP_LOGO = `${ASSETS}/app-logo.png`
+const APP_LOGO = '/app-logo.png'
 
 const infoLinks = [
   { label: 'Tentang Kami', href: '/tentang' },
