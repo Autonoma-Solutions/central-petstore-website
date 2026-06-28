@@ -118,7 +118,7 @@ export default function KategoriSection() {
               <img
                 src={cat.photo}
                 alt={cat.photoAlt}
-                className="absolute bottom-0 right-0 w-56 h-56 object-contain"
+                className="absolute bottom-0 right-0 w-full max-w-[280px] h-[220px] object-contain object-right-bottom"
                 loading="lazy"
                 onError={(e) => {
                   const el = e.target as HTMLImageElement
