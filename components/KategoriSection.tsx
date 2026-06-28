@@ -88,7 +88,7 @@ export default function KategoriSection() {
               </div>
 
               {/* Card Body — list kiri, foto absolute bottom-right */}
-              <div className="flex-1 pl-5 pr-48 pb-2">
+              <div className="flex-1 pl-5 pr-56 pb-2">
                 <ul className="space-y-1.5">
                   {cat.items.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-gray-600">
@@ -118,7 +118,7 @@ export default function KategoriSection() {
               <img
                 src={cat.photo}
                 alt={cat.photoAlt}
-                className="absolute bottom-0 right-0 w-44 h-44 object-contain"
+                className="absolute bottom-0 right-0 w-56 h-56 object-contain"
                 loading="lazy"
                 onError={(e) => {
                   const el = e.target as HTMLImageElement
