@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import { CheckCircle } from 'lucide-react'
 
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+
 const categories = [
   {
-    icon: '🐾',
+    icon: `${ASSETS}/petshop-icon.png`,
     label: 'PETSHOP',
     subtitle: 'Kebutuhan Hewan Peliharaan',
     color: '#0A2A8A',
@@ -24,7 +26,7 @@ const categories = [
     checkColor: '#39A7FF',
   },
   {
-    icon: '🐟',
+    icon: `${ASSETS}/aquarium-icon.png`,
     label: 'AQUARIUM',
     subtitle: 'Peralatan & Perlengkapan',
     color: '#0891B2',
@@ -43,7 +45,7 @@ const categories = [
     checkColor: '#0891B2',
   },
   {
-    icon: '🎣',
+    icon: `${ASSETS}/pancingan-icon.png`,
     label: 'PANCING',
     subtitle: 'Peralatan Memancing Pilihan',
     color: '#F57C00',
@@ -76,12 +78,7 @@ export default function KategoriSection() {
             >
               {/* Card Header — icon dalam lingkaran biru + judul UPPERCASE */}
               <div className="flex items-center gap-3 px-5 pt-5 pb-3">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: '#0A2A8A' }}
-                >
-                  <span className="text-lg leading-none">{cat.icon}</span>
-                </div>
+                <img src={cat.icon} alt={cat.label} className="w-10 h-10 rounded-full object-contain shrink-0" />
                 <h3 className="font-extrabold text-xl uppercase leading-tight tracking-wide" style={{ color: '#0A2A8A' }}>
                   {cat.label}
                 </h3>

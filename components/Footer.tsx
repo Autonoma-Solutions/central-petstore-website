@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
 
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+const APP_LOGO = `${ASSETS}/app-logo.png`
+
 const infoLinks = [
   { label: 'Tentang Kami', href: '/tentang' },
   { label: 'Blog & Tips', href: '/blog' },
@@ -32,14 +35,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Col 1: Logo & Deskripsi */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-white/10">
-                🐾
-              </div>
-              <div>
-                <div className="font-extrabold text-lg text-white">Central Petstore</div>
-                <div className="text-xs" style={{ color: '#39A7FF' }}>SOLUTION CENTRAL PETSHOP</div>
-              </div>
+            <div className="mb-4">
+              <img src={APP_LOGO} alt="Central Petstore" className="h-12 w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
               Toko petshop, aquarium, dan pancing terlengkap di Manado. Produk berkualitas, harga bersahabat, dan pelayanan terpercaya.

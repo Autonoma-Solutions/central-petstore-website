@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { Star } from 'lucide-react'
 import { supabase, type Testimonial } from '@/lib/supabase'
 
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+const APP_LOGO_ICON = `${ASSETS}/app-logo-without-text.png`
+
 export default function TestimoniSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
@@ -72,7 +75,9 @@ export default function TestimoniSection() {
         className="rounded-xl p-4 text-white"
         style={{ background: 'linear-gradient(135deg, #0A2A8A, #39A7FF)' }}
       >
-        <h4 className="font-extrabold text-base mb-2">🏪 Tentang Central Petstore</h4>
+        <h4 className="font-extrabold text-base mb-2 flex items-center gap-2">
+          <img src={APP_LOGO_ICON} alt="" className="w-6 h-6 object-contain" /><span>Tentang Central Petstore</span>
+        </h4>
         <p className="text-sm text-white/80 leading-relaxed mb-3">
           Toko petshop, aquarium, dan pancing terlengkap di Manado. Berdiri sejak 2010, kami melayani ribuan pelanggan setia dengan produk berkualitas dan harga terbaik.
         </p>

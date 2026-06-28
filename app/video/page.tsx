@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { Play } from 'lucide-react'
 import { supabase, type Video } from '@/lib/supabase'
 
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+const TIKTOK_ICON = `${ASSETS}/tiktok-icon-free-png.webp`
+
 export default function VideoListPage() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading, setLoading] = useState(true)
@@ -23,8 +26,8 @@ export default function VideoListPage() {
 
   return (
     <div className="max-w-[1600px] mx-auto px-4 py-12 md:py-16">
-      <h1 className="text-2xl md:text-3xl font-extrabold mb-2" style={{ color: '#0A2A8A' }}>
-        📹 Video Terbaru
+      <h1 className="text-2xl md:text-3xl font-extrabold mb-2 flex items-center gap-2" style={{ color: '#0A2A8A' }}>
+        <img src={TIKTOK_ICON} alt="" className="w-8 h-8 object-contain rounded-full" /><span>Video Terbaru</span>
       </h1>
       <p className="text-sm text-gray-500 mb-8">
         Tips dan konten seputar petshop, aquarium, dan pancing dari Central Petstore.

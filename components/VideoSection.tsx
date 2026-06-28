@@ -6,6 +6,9 @@ import { Play, ExternalLink } from 'lucide-react'
 import { supabase, type Video } from '@/lib/supabase'
 import TestimoniSection from './TestimoniSection'
 
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+const TIKTOK_ICON = `${ASSETS}/tiktok-icon-free-png.webp`
+
 export default function VideoSection() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading, setLoading] = useState(true)
@@ -30,8 +33,8 @@ export default function VideoSection() {
           {/* LEFT: Video Terbaru */}
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
-                📹 Video Terbaru
+              <h2 className="text-xl md:text-2xl font-extrabold flex items-center gap-2" style={{ color: '#0A2A8A' }}>
+                <img src={TIKTOK_ICON} alt="" className="w-6 h-6 object-contain rounded-full" /><span>Video Terbaru</span>
               </h2>
               <a
                 href="https://tiktok.com/@centralpetstore.id"

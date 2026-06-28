@@ -5,13 +5,15 @@ import Link from 'next/link'
 import {
   Search,
   MessageCircle,
-  User,
   ShoppingCart,
   ChevronDown,
   Menu,
   X,
   Home,
 } from 'lucide-react'
+
+const ASSETS = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
+const APP_LOGO = `${ASSETS}/app-logo.png`
 
 const menuItems = [
   { label: 'Beranda', href: '/', icon: <Home size={14} />, dropdown: null },
@@ -65,21 +67,8 @@ export default function Navbar() {
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-[1600px] mx-auto px-4 py-2 flex items-center gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-white text-xl font-bold"
-              style={{ background: 'linear-gradient(135deg, #0A2A8A, #39A7FF)' }}
-            >
-              🐾
-            </div>
-            <div className="hidden sm:block">
-              <div className="font-extrabold text-base leading-tight" style={{ color: '#0A2A8A' }}>
-                Central Petstore
-              </div>
-              <div className="text-xs font-medium tracking-wide" style={{ color: '#39A7FF' }}>
-                SOLUTION CENTRAL PETSHOP
-              </div>
-            </div>
+          <Link href="/" className="flex items-center shrink-0">
+            <img src={APP_LOGO} alt="Central Petstore" className="h-10 sm:h-12 w-auto object-contain" />
           </Link>
 
           {/* Search Bar */}
@@ -109,14 +98,14 @@ export default function Navbar() {
               className="flex items-center gap-1.5 text-sm font-medium hover:opacity-80 transition-opacity"
               style={{ color: '#25D366' }}
             >
-              <MessageCircle size={20} />
+              <img src="/whatsapp-icon.png" alt="WhatsApp" className="w-5 h-5" />
               <span className="hidden lg:block">0813 4251 3200</span>
             </a>
             <Link
               href="/admin"
               className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             >
-              <User size={20} />
+              <img src="/profile-icon.png" alt="Akun Saya" className="w-5 h-5" />
               <span className="hidden lg:block">Akun Saya</span>
             </Link>
             <button className="relative flex items-center gap-1.5 text-gray-600 hover:text-gray-900 transition-colors">
