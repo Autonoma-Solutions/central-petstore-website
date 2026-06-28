@@ -30,7 +30,50 @@ export type Product = {
   created_at: string
 }
 
+export type Video = {
+  id: string
+  title: string
+  thumbnail_url: string | null
+  video_url: string | null
+  platform: 'tiktok' | 'youtube' | 'instagram'
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
+
+export type Testimonial = {
+  id: string
+  name: string
+  location: string | null
+  avatar_url: string | null
+  rating: number
+  content: string
+  is_active: boolean
+  sort_order: number
+  created_at: string
+}
+
+export type Promo = {
+  id: string
+  image_url: string
+  link_url: string
+  is_active: boolean
+  sort_order: number
+  created_at: string
+}
+
 export const WA_NUMBER = process.env.NEXT_PUBLIC_WA_NUMBER || '6281342513200'
+
+export const STORAGE_BUCKET = 'assets'
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
 
 export function formatRupiah(amount: number): string {
   return new Intl.NumberFormat('id-ID', {

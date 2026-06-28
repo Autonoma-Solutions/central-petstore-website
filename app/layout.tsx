@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import SiteChrome from '@/components/SiteChrome'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -49,9 +48,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={plusJakartaSans.variable}>
       <body className="antialiased" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )

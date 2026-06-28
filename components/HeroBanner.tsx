@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ShoppingBag, MessageCircle } from 'lucide-react'
+import Link from 'next/link'
+import { buildWaLink } from '@/lib/supabase'
 
 const SUPABASE = 'https://qxxassyqepesnrydkfhq.supabase.co/storage/v1/object/public/assets'
 
@@ -86,23 +88,45 @@ export default function HeroBanner() {
           >
             <ChevronRight size={16} className="text-gray-700" />
           </button>
-        </div>
 
-        {/* ── Dots di bawah gambar ── */}
-        <div className="flex items-center justify-center gap-1.5 mt-2.5">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              aria-label={`Slide ${i + 1}`}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: current === i ? 20 : 6,
-                height: 6,
-                background: current === i ? '#39A7FF' : '#CBD5E1',
-              }}
-            />
-          ))}
+          {/* ── CTA Buttons — sejajar dengan teks banner, posisi % ikut skala gambar di semua ukuran layar ── */}
+          <div className="absolute left-[6%] bottom-[16%] z-10 flex flex-wrap items-center gap-2 sm:gap-3">
+            <Link
+              href="#produk-unggulan"
+              className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              style={{ background: '#39A7FF' }}
+            >
+              <ShoppingBag size={16} />
+              Belanja Sekarang
+            </Link>
+            <a
+              href={buildWaLink('Halo, saya tertarik dengan produk di Central Petstore')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              style={{ background: '#25D366' }}
+            >
+              <MessageCircle size={16} />
+              Chat WhatsApp
+            </a>
+          </div>
+
+          {/* ── Dots — overlay tengah-bawah, di dalam gambar ── */}
+          <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Slide ${i + 1}`}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: current === i ? 20 : 6,
+                  height: 6,
+                  background: current === i ? '#39A7FF' : '#CBD5E1',
+                }}
+              />
+            ))}
+          </div>
         </div>
 
       </div>

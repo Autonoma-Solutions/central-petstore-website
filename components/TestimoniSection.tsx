@@ -1,73 +1,71 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Star } from 'lucide-react'
-
-const testimonials = [
-  {
-    id: 1,
-    name: 'Andi Saputra',
-    city: 'Manado',
-    avatar: '👨',
-    rating: 5,
-    text: 'Barang lengkap dan pelayanan cepat. Sangat recommended untuk semua kebutuhan hewan peliharaan!',
-    product: 'Louise Pet Shampoo',
-  },
-  {
-    id: 2,
-    name: 'Budi Wicaksono',
-    city: 'Manado',
-    avatar: '👨‍💼',
-    rating: 5,
-    text: 'Pompa aquarium awet dan harga bersahabat. Sudah langganan lebih dari 2 tahun, pasti balik lagi!',
-    product: 'Sakkai Pump SP-103',
-  },
-  {
-    id: 3,
-    name: 'Rudi Halim',
-    city: 'Manado',
-    avatar: '🧔',
-    rating: 5,
-    text: 'Peralatan pancing lengkap dan kualitas terjamin. Metal jig seryoma sudah proven di laut Manado!',
-    product: 'Metal Jig Seryoma 40g',
-  },
-]
+import { supabase, type Testimonial } from '@/lib/supabase'
 
 export default function TestimoniSection() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    supabase
+      .from('testimonials')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        setTestimonials(data || [])
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <div className="flex flex-col gap-4">
       <h3 className="font-extrabold text-lg mb-1" style={{ color: '#0A2A8A' }}>
         💬 Testimoni Pelanggan
       </h3>
 
-      {testimonials.map((t) => (
-        <div
-          key={t.id}
-          className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow"
-        >
-          {/* Stars */}
-          <div className="flex gap-0.5 mb-2">
-            {Array.from({ length: t.rating }).map((_, i) => (
-              <Star
-                key={i}
-                size={14}
-                className="fill-current"
-                style={{ color: '#FFA726' }}
-              />
-            ))}
-          </div>
+      {!loading && testimonials.length === 0 ? (
+        <p className="text-sm text-gray-400">Belum ada testimoni.</p>
+      ) : (
+        testimonials.map((t) => (
+          <div key={t.id} className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow">
+            {/* Stars */}
+            <div className="flex gap-0.5 mb-2">
+              {Array.from({ length: t.rating }).map((_, i) => (
+                <Star key={i} size={14} className="fill-current" style={{ color: '#FFA726' }} />
+              ))}
+            </div>
 
-          {/* Text */}
-          <p className="text-sm text-gray-600 mb-3 leading-relaxed">"{t.text}"</p>
+            {/* Text */}
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">&quot;{t.content}&quot;</p>
 
-          {/* Footer */}
-          <div className="flex items-center gap-2">
-            <div className="text-2xl">{t.avatar}</div>
-            <div>
-              <div className="font-bold text-sm text-gray-800">{t.name}</div>
-              <div className="text-xs text-gray-400">{t.city} • Produk: {t.product}</div>
+            {/* Footer */}
+            <div className="flex items-center gap-2">
+              {t.avatar_url ? (
+                <img
+                  src={t.avatar_url}
+                  alt={t.name}
+                  className="w-9 h-9 rounded-full object-cover"
+                />
+              ) : (
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                  style={{ background: '#39A7FF' }}
+                >
+                  {t.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <div>
+                <div className="font-bold text-sm text-gray-800">{t.name}</div>
+                {t.location && <div className="text-xs text-gray-400">{t.location}</div>}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
 
       {/* Mini About Card */}
       <div

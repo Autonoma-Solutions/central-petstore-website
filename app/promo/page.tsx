@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { supabase, type Promo } from '@/lib/supabase'
 
-export default function PromoSection() {
+export default function PromoPage() {
   const [promos, setPromos] = useState<Promo[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -14,43 +13,37 @@ export default function PromoSection() {
       .select('*')
       .eq('is_active', true)
       .order('sort_order', { ascending: true })
-      .limit(3)
       .then(({ data }) => {
         setPromos(data || [])
         setLoading(false)
       })
   }, [])
 
-  if (!loading && promos.length === 0) return null
-
   return (
-    <section className="py-12 md:py-16" style={{ background: '#F5F7FA' }}>
-      <div className="max-w-[1600px] mx-auto px-4">
-        {/* Section header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: '#0A2A8A' }}>
-            🔥 Promo Hari Ini
-          </h2>
-          <Link href="/promo" className="text-sm font-semibold hover:underline" style={{ color: '#39A7FF' }}>
-            Lihat Semua Promo →
-          </Link>
-        </div>
+    <div className="max-w-[1600px] mx-auto px-4 py-12 md:py-16">
+      <h1 className="text-2xl md:text-3xl font-extrabold mb-8" style={{ color: '#0A2A8A' }}>
+        🔥 Promo Hari Ini
+      </h1>
 
-        {/* Banner grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {loading ? (
+        <p className="text-sm text-gray-400">Memuat...</p>
+      ) : promos.length === 0 ? (
+        <p className="text-sm text-gray-400">Belum ada promo aktif saat ini.</p>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {promos.map((promo) => (
             <a
               key={promo.id}
               href={promo.link_url}
               target={promo.link_url.startsWith('http') ? '_blank' : undefined}
               rel={promo.link_url.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              className="block rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow"
             >
               <img src={promo.image_url} alt="Promo" className="w-full h-auto object-cover" loading="lazy" />
             </a>
           ))}
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   )
 }
