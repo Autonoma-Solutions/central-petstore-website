@@ -36,7 +36,7 @@ export default function Footer() {
           {/* Col 1: Logo & Deskripsi */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <img src={APP_LOGO} alt="Central Petstore" className="h-12 w-auto object-contain" />
+              <img src={APP_LOGO} alt="Central Petstore" className="h-[67px] w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
               Toko petshop, aquarium, dan pancing terlengkap di Manado. Produk berkualitas, harga bersahabat, dan pelayanan terpercaya.
