@@ -23,6 +23,7 @@ export default function VideoForm({ id }: VideoFormProps) {
   const [error, setError] = useState('')
 
   const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
   const [videoUrl, setVideoUrl] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
   const [platform, setPlatform] = useState('tiktok')
@@ -39,6 +40,7 @@ export default function VideoForm({ id }: VideoFormProps) {
       .then(({ data }) => {
         if (data) {
           setTitle(data.title)
+          setDescription(data.description || '')
           setVideoUrl(data.video_url || '')
           setThumbnailUrl(data.thumbnail_url || '')
           setPlatform(data.platform || 'tiktok')
@@ -56,6 +58,7 @@ export default function VideoForm({ id }: VideoFormProps) {
 
     const payload = {
       title,
+      description: description || null,
       video_url: videoUrl || null,
       thumbnail_url: thumbnailUrl || null,
       platform,
@@ -86,6 +89,17 @@ export default function VideoForm({ id }: VideoFormProps) {
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Deskripsi</label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={3}
+          placeholder="Deskripsi singkat untuk halaman detail video"
           className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
       </div>

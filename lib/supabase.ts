@@ -33,6 +33,7 @@ export type Product = {
 export type Video = {
   id: string
   title: string
+  description: string | null
   thumbnail_url: string | null
   video_url: string | null
   platform: 'tiktok' | 'youtube' | 'instagram'

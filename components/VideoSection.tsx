@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Play, ExternalLink } from 'lucide-react'
 import { supabase, type Video } from '@/lib/supabase'
 import TestimoniSection from './TestimoniSection'
@@ -49,11 +50,9 @@ export default function VideoSection() {
             ) : (
               <div className="grid grid-cols-2 gap-3">
                 {videos.map((video, i) => (
-                  <a
+                  <Link
                     key={video.id}
-                    href={video.video_url && video.video_url !== '#' ? video.video_url : 'https://tiktok.com/@centralpetstore.id'}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/video/${video.id}`}
                     className={`group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow ${i === 0 ? 'col-span-2' : ''}`}
                   >
                     {/* Thumbnail */}
@@ -96,16 +95,14 @@ export default function VideoSection() {
                         {video.title}
                       </p>
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
 
-            {/* TikTok CTA */}
-            <a
-              href="https://tiktok.com/@centralpetstore.id"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Lihat Semua Video CTA */}
+            <Link
+              href="/video"
               className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-full border-2 text-sm font-semibold transition-colors hover:text-white"
               style={{ borderColor: '#0A2A8A', color: '#0A2A8A' }}
               onMouseOver={(e) => {
@@ -119,8 +116,8 @@ export default function VideoSection() {
                 el.style.color = '#0A2A8A'
               }}
             >
-              Lihat Semua Video di TikTok
-            </a>
+              Lihat Semua Video
+            </Link>
           </div>
 
           {/* RIGHT: Testimoni + About */}
