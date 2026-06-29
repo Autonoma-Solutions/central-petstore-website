@@ -70,7 +70,7 @@ export default function KategoriSection() {
     <section className="py-12 md:py-16" style={{ background: '#F5F7FA' }}>
       <div className="max-w-[1600px] mx-auto px-4">
         {/* 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {categories.map((cat) => (
             <div
               key={cat.label}
@@ -85,7 +85,7 @@ export default function KategoriSection() {
               </div>
 
               {/* Card Body — list kiri, foto absolute bottom-right */}
-              <div className="flex-1 pl-5 pr-[260px] pb-2">
+              <div className="flex-1 pl-5 pr-[45%] pb-2">
                 <ul className="space-y-1.5">
                   {cat.items.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-gray-600">
@@ -115,7 +115,7 @@ export default function KategoriSection() {
               <img
                 src={cat.photo}
                 alt={cat.photoAlt}
-                className="absolute bottom-0 right-0 w-full max-w-[300px] h-full object-contain object-right-bottom"
+                className="absolute bottom-0 right-0 w-[40%] max-w-[300px] h-full object-contain object-right-bottom"
                 loading="lazy"
                 onError={(e) => {
                   const el = e.target as HTMLImageElement
