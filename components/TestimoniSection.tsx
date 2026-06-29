@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { Star } from 'lucide-react'
 import { supabase, type Testimonial } from '@/lib/supabase'
@@ -10,6 +10,13 @@ const APP_LOGO_ICON = '/app-logo-without-text.png'
 export default function TestimoniSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
+
+  const [name, setName] = useState('')
+  const [location, setLocation] = useState('')
+  const [rating, setRating] = useState(5)
+  const [content, setContent] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     supabase
@@ -22,6 +29,31 @@ export default function TestimoniSection() {
         setLoading(false)
       })
   }, [])
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setSubmitStatus('idle')
+
+    const { error } = await supabase.from('testimonials').insert({
+      name,
+      location: location || null,
+      rating,
+      content,
+      is_active: false,
+    })
+
+    setSubmitting(false)
+    if (error) {
+      setSubmitStatus('error')
+      return
+    }
+    setSubmitStatus('success')
+    setName('')
+    setLocation('')
+    setRating(5)
+    setContent('')
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,6 +100,66 @@ export default function TestimoniSection() {
           </div>
         ))
       )}
+
+      {/* Form Tulis Testimoni */}
+      <div className="bg-white rounded-xl shadow-md p-4">
+        <h4 className="font-bold text-sm text-gray-800 mb-3">✍️ Tulis Testimoni Anda</h4>
+
+        {submitStatus === 'success' ? (
+          <p className="text-sm text-green-600">
+            Terima kasih! Testimoni Anda akan tampil setelah disetujui admin.
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-2.5">
+            <input
+              type="text"
+              required
+              placeholder="Nama Anda"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            <input
+              type="text"
+              placeholder="Lokasi (opsional)"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button key={star} type="button" onClick={() => setRating(star)} className="p-0.5">
+                  <Star
+                    size={18}
+                    className={star <= rating ? 'fill-current' : ''}
+                    style={{ color: star <= rating ? '#FFA726' : '#E5E7EB' }}
+                  />
+                </button>
+              ))}
+            </div>
+            <textarea
+              required
+              placeholder="Tulis pengalaman Anda berbelanja di Central Petstore..."
+              rows={3}
+              maxLength={300}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            {submitStatus === 'error' && (
+              <p className="text-xs text-red-500">Gagal mengirim testimoni. Silakan coba lagi.</p>
+            )}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full py-2 rounded-full text-white text-sm font-semibold disabled:opacity-60 transition-opacity"
+              style={{ background: '#0A2A8A' }}
+            >
+              {submitting ? 'Mengirim...' : 'Kirim Testimoni'}
+            </button>
+          </form>
+        )}
+      </div>
 
       {/* Mini About Card */}
       <div

@@ -7,8 +7,6 @@ const infoLinks = [
   { label: 'Tentang Kami', href: '/tentang' },
   { label: 'Blog & Tips', href: '/blog' },
   { label: 'Promo', href: '/promo' },
-  { label: 'Karir', href: '/karir' },
-  { label: 'Kebijakan Privasi', href: '/privasi' },
 ]
 
 const kategoriLinks = [
@@ -17,14 +15,6 @@ const kategoriLinks = [
   { label: '🎣 Pancing', href: '/pancing' },
   { label: '💊 Kesehatan Hewan', href: '/petshop#kesehatan' },
   { label: '🏮 Aksesoris', href: '/petshop#aksesoris' },
-]
-
-const bantuanLinks = [
-  { label: 'Cara Pemesanan', href: '/bantuan/pemesanan' },
-  { label: 'Pembayaran', href: '/bantuan/pembayaran' },
-  { label: 'Pengiriman', href: '/bantuan/pengiriman' },
-  { label: 'Retur & Refund', href: '/bantuan/retur' },
-  { label: 'FAQ', href: '/bantuan/faq' },
 ]
 
 export default function Footer() {
@@ -62,10 +52,10 @@ export default function Footer() {
             {/* Social media */}
             <div className="flex items-center gap-3 mt-5">
               {[
-                { href: 'https://instagram.com/centralpetstore.id', label: '📷', title: 'Instagram' },
-                { href: 'https://tiktok.com/@centralpetstore.id', label: '🎵', title: 'TikTok' },
-                { href: 'https://youtube.com/@centralpetstore', label: '▶', title: 'YouTube' },
-                { href: 'https://facebook.com/centralpetstore', label: 'f', title: 'Facebook' },
+                { href: 'https://instagram.com/centralpetstore.id', icon: 'instagram', title: 'Instagram' },
+                { href: 'https://tiktok.com/@centralpetstore.id', icon: 'tiktok', title: 'TikTok' },
+                { href: 'https://youtube.com/@centralpetstore', icon: 'youtube', title: 'YouTube' },
+                { href: 'https://facebook.com/centralpetstore', icon: 'facebook', title: 'Facebook' },
               ].map((social) => (
                 <a
                   key={social.title}
@@ -73,10 +63,10 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={social.title}
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold transition-opacity hover:opacity-75"
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-opacity hover:opacity-75"
                   style={{ background: 'rgba(255,255,255,0.1)' }}
                 >
-                  {social.label}
+                  <img src={`https://cdn.simpleicons.org/${social.icon}/ffffff`} alt={social.title} className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -118,24 +108,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Bantuan + Hubungi */}
+          {/* Col 4: Hubungi Kami */}
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wide">Bantuan</h4>
-            <ul className="space-y-2 mb-6">
-              {bantuanLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm transition-colors hover:text-white"
-                    style={{ color: 'rgba(255,255,255,0.65)' }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <h4 className="font-bold text-white mb-3 text-sm uppercase tracking-wide">Hubungi Kami</h4>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wide">Hubungi Kami</h4>
             <div className="space-y-2">
               <a
                 href="https://wa.me/6281342513200"
