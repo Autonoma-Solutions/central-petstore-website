@@ -5,7 +5,6 @@ import Link from 'next/link'
 import {
   Search,
   MessageCircle,
-  ShoppingCart,
   ChevronDown,
   Menu,
   X,
@@ -89,7 +88,7 @@ export default function Navbar() {
           </div>
 
           {/* Right actions */}
-          <div className="hidden md:flex items-center gap-4 shrink-0">
+          <div className="hidden md:flex items-center gap-4 shrink-0 ml-auto">
             <a
               href="https://wa.me/6281342513200"
               target="_blank"
@@ -112,15 +111,6 @@ export default function Navbar() {
                 <span className="text-xs text-gray-400">Masuk</span>
               </span>
             </Link>
-            <button className="relative flex items-center gap-1.5 text-gray-600 hover:text-gray-900 transition-colors">
-              <ShoppingCart size={20} />
-              <span
-                className="absolute -top-2 -right-2 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold"
-                style={{ background: '#0A2A8A' }}
-              >
-                0
-              </span>
-            </button>
           </div>
 
           {/* Mobile hamburger */}

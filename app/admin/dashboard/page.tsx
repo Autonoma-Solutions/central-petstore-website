@@ -41,24 +41,24 @@ export default function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold mb-6" style={{ color: '#0A2A8A' }}>
+      <h1 className="text-xl sm:text-2xl font-extrabold mb-4 sm:mb-6" style={{ color: '#0A2A8A' }}>
         Dashboard
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {cards.map((card) => {
           const Icon = card.icon
           return (
-            <div key={card.label} className="bg-white rounded-xl shadow-sm p-5">
+            <div key={card.label} className="bg-white rounded-xl shadow-sm p-4 sm:p-5">
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
                 style={{ background: `${card.color}1A` }}
               >
                 <Icon size={20} style={{ color: card.color }} />
               </div>
-              <p className="text-2xl font-extrabold text-gray-900">
+              <p className="text-xl sm:text-2xl font-extrabold text-gray-900">
                 {card.value === undefined ? '—' : card.value}
               </p>
-              <p className="text-sm text-gray-500 mt-1">{card.label}</p>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1">{card.label}</p>
             </div>
           )
         })}

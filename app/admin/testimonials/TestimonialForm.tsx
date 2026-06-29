@@ -76,41 +76,55 @@ export default function TestimonialForm({ id }: TestimonialFormProps) {
   if (loading) return <p className="text-sm text-gray-400">Memuat...</p>
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-xl shadow-sm p-6 space-y-5">
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Nama</label>
-        <input
-          type="text"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
+    <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-xl shadow-sm p-4 sm:p-6 space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Nama</label>
+          <input
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Lokasi</label>
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Jakarta"
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Lokasi</label>
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="Jakarta"
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Rating</label>
+          <div className="flex items-center gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button key={star} type="button" onClick={() => setRating(star)} className="p-0.5">
+                <Star
+                  size={24}
+                  className={star <= rating ? 'fill-current' : ''}
+                  style={{ color: star <= rating ? '#FFA726' : '#E5E7EB' }}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Rating</label>
-        <div className="flex items-center gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button key={star} type="button" onClick={() => setRating(star)} className="p-0.5">
-              <Star
-                size={24}
-                className={star <= rating ? 'fill-current' : ''}
-                style={{ color: star <= rating ? '#FFA726' : '#E5E7EB' }}
-              />
-            </button>
-          ))}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Urutan Tampil</label>
+          <input
+            type="number"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
         </div>
       </div>
 
@@ -121,21 +135,11 @@ export default function TestimonialForm({ id }: TestimonialFormProps) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={4}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="w-full min-h-[120px] resize-y px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
       </div>
 
       <ImageUpload value={avatarUrl} onChange={setAvatarUrl} label="Foto Avatar (opsional)" />
-
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Urutan Tampil</label>
-        <input
-          type="number"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="w-32 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
-      </div>
 
       <label className="flex items-center gap-3 cursor-pointer">
         <input
@@ -149,11 +153,11 @@ export default function TestimonialForm({ id }: TestimonialFormProps) {
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
         <button
           type="submit"
           disabled={saving}
-          className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-60"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-60"
           style={{ background: '#0A2A8A' }}
         >
           {saving ? 'Menyimpan...' : 'Simpan'}
@@ -161,7 +165,7 @@ export default function TestimonialForm({ id }: TestimonialFormProps) {
         <button
           type="button"
           onClick={() => router.push('/admin/testimonials')}
-          className="px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100"
         >
           Batalkan
         </button>

@@ -42,13 +42,13 @@ export default function PromosListPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
           Promo
         </h1>
         <Link
           href="/admin/promos/new"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white w-full sm:w-auto"
           style={{ background: '#0A2A8A' }}
         >
           <Plus size={16} />
@@ -59,9 +59,13 @@ export default function PromosListPage() {
       {loading ? (
         <p className="text-sm text-gray-400">Memuat...</p>
       ) : (
-        <DataTable headers={['Banner', 'URL Tujuan', 'Urutan', 'Aktif', 'Aksi']} empty={promos.length === 0}>
-          {promos.map((promo) => (
-            <tr key={promo.id} className="hover:bg-gray-50">
+        <DataTable
+          headers={['Banner', 'URL Tujuan', 'Urutan', 'Aktif', 'Aksi']}
+          items={promos}
+          keyExtractor={(promo) => promo.id}
+          empty={promos.length === 0}
+          renderRow={(promo) => (
+            <>
               <td className="px-4 py-3">
                 <div className="w-20 h-12 rounded-lg bg-gray-100 overflow-hidden">
                   {promo.image_url && (
@@ -99,9 +103,46 @@ export default function PromosListPage() {
                   </button>
                 </div>
               </td>
-            </tr>
-          ))}
-        </DataTable>
+            </>
+          )}
+          renderCard={(promo) => (
+            <div className="flex gap-3">
+              <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden shrink-0">
+                {promo.image_url && (
+                  <img src={promo.image_url} alt="Promo" className="w-full h-full object-cover" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-700 truncate">{promo.link_url}</p>
+                <p className="text-xs text-gray-400 mt-0.5">Urutan: {promo.sort_order}</p>
+                <button
+                  onClick={() => toggleActive(promo)}
+                  className="mt-2 px-2.5 py-1 rounded-full text-xs font-semibold"
+                  style={{
+                    background: promo.is_active ? '#DCFCE7' : '#F3F4F6',
+                    color: promo.is_active ? '#16A34A' : '#6B7280',
+                  }}
+                >
+                  {promo.is_active ? 'Aktif' : 'Nonaktif'}
+                </button>
+              </div>
+              <div className="flex flex-col gap-2 shrink-0">
+                <Link
+                  href={`/admin/promos/${promo.id}/edit`}
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500"
+                >
+                  <Pencil size={16} />
+                </Link>
+                <button
+                  onClick={() => setDeleteTarget(promo)}
+                  className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+        />
       )}
 
       <ConfirmDialog

@@ -81,7 +81,7 @@ export default function VideoForm({ id }: VideoFormProps) {
   if (loading) return <p className="text-sm text-gray-400">Memuat...</p>
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-xl shadow-sm p-6 space-y-5">
+    <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-xl shadow-sm p-4 sm:p-6 space-y-5">
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1.5">Judul Video</label>
         <input
@@ -100,7 +100,7 @@ export default function VideoForm({ id }: VideoFormProps) {
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
           placeholder="Deskripsi singkat untuk halaman detail video"
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="w-full min-h-[120px] resize-y px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
       </div>
 
@@ -117,29 +117,31 @@ export default function VideoForm({ id }: VideoFormProps) {
 
       <ImageUpload value={thumbnailUrl} onChange={setThumbnailUrl} label="Thumbnail" />
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Platform</label>
-        <select
-          value={platform}
-          onChange={(e) => setPlatform(e.target.value)}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          {platforms.map((p) => (
-            <option key={p.value} value={p.value}>
-              {p.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Platform</label>
+          <select
+            value={platform}
+            onChange={(e) => setPlatform(e.target.value)}
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            {platforms.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Urutan Tampil</label>
-        <input
-          type="number"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="w-32 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Urutan Tampil</label>
+          <input
+            type="number"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
       </div>
 
       <label className="flex items-center gap-3 cursor-pointer">
@@ -154,11 +156,11 @@ export default function VideoForm({ id }: VideoFormProps) {
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
         <button
           type="submit"
           disabled={saving}
-          className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-60"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-60"
           style={{ background: '#0A2A8A' }}
         >
           {saving ? 'Menyimpan...' : 'Simpan'}
@@ -166,7 +168,7 @@ export default function VideoForm({ id }: VideoFormProps) {
         <button
           type="button"
           onClick={() => router.push('/admin/videos')}
-          className="px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100"
         >
           Batalkan
         </button>

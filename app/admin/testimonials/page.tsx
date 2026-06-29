@@ -44,13 +44,13 @@ export default function TestimonialsListPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
           Testimoni
         </h1>
         <Link
           href="/admin/testimonials/new"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white w-full sm:w-auto"
           style={{ background: '#0A2A8A' }}
         >
           <Plus size={16} />
@@ -61,9 +61,13 @@ export default function TestimonialsListPage() {
       {loading ? (
         <p className="text-sm text-gray-400">Memuat...</p>
       ) : (
-        <DataTable headers={['Nama', 'Lokasi', 'Rating', 'Aktif', 'Aksi']} empty={testimonials.length === 0}>
-          {testimonials.map((testimonial) => (
-            <tr key={testimonial.id} className="hover:bg-gray-50">
+        <DataTable
+          headers={['Nama', 'Lokasi', 'Rating', 'Aktif', 'Aksi']}
+          items={testimonials}
+          keyExtractor={(testimonial) => testimonial.id}
+          empty={testimonials.length === 0}
+          renderRow={(testimonial) => (
+            <>
               <td className="px-4 py-3 font-medium text-gray-900">{testimonial.name}</td>
               <td className="px-4 py-3 text-gray-500">{testimonial.location || '-'}</td>
               <td className="px-4 py-3">
@@ -101,9 +105,48 @@ export default function TestimonialsListPage() {
                   </button>
                 </div>
               </td>
-            </tr>
-          ))}
-        </DataTable>
+            </>
+          )}
+          renderCard={(testimonial) => (
+            <div>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                  <p className="text-xs text-gray-400">{testimonial.location || '-'}</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={`/admin/testimonials/${testimonial.id}/edit`}
+                    className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500"
+                  >
+                    <Pencil size={16} />
+                  </Link>
+                  <button
+                    onClick={() => setDeleteTarget(testimonial)}
+                    className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center gap-0.5 mt-2">
+                {Array.from({ length: testimonial.rating }).map((_, i) => (
+                  <Star key={i} size={14} className="fill-current" style={{ color: '#FFA726' }} />
+                ))}
+              </div>
+              <button
+                onClick={() => toggleActive(testimonial)}
+                className="mt-2 px-2.5 py-1 rounded-full text-xs font-semibold"
+                style={{
+                  background: testimonial.is_active ? '#DCFCE7' : '#F3F4F6',
+                  color: testimonial.is_active ? '#16A34A' : '#6B7280',
+                }}
+              >
+                {testimonial.is_active ? 'Aktif' : 'Nonaktif'}
+              </button>
+            </div>
+          )}
+        />
       )}
 
       <ConfirmDialog

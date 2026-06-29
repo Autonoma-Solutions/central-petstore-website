@@ -49,13 +49,13 @@ export default function ArticlesListPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
           Artikel / Blog
         </h1>
         <Link
           href="/admin/articles/new"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white w-full sm:w-auto"
           style={{ background: '#0A2A8A' }}
         >
           <Plus size={16} />
@@ -66,9 +66,13 @@ export default function ArticlesListPage() {
       {loading ? (
         <p className="text-sm text-gray-400">Memuat...</p>
       ) : (
-        <DataTable headers={['Judul', 'Kategori', 'Status', 'Tanggal', 'Aksi']} empty={articles.length === 0}>
-          {articles.map((article) => (
-            <tr key={article.id} className="hover:bg-gray-50">
+        <DataTable
+          headers={['Judul', 'Kategori', 'Status', 'Tanggal', 'Aksi']}
+          items={articles}
+          keyExtractor={(article) => article.id}
+          empty={articles.length === 0}
+          renderRow={(article) => (
+            <>
               <td className="px-4 py-3 font-medium text-gray-900 max-w-xs truncate">{article.title}</td>
               <td className="px-4 py-3 text-gray-500">
                 {categoryLabels[article.category || 'umum'] || article.category}
@@ -104,9 +108,44 @@ export default function ArticlesListPage() {
                   </button>
                 </div>
               </td>
-            </tr>
-          ))}
-        </DataTable>
+            </>
+          )}
+          renderCard={(article) => (
+            <div>
+              <div className="flex items-start justify-between gap-3">
+                <p className="font-semibold text-gray-900 line-clamp-2">{article.title}</p>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={`/admin/articles/${article.id}/edit`}
+                    className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500"
+                  >
+                    <Pencil size={16} />
+                  </Link>
+                  <button
+                    onClick={() => setDeleteTarget(article)}
+                    className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                {categoryLabels[article.category || 'umum'] || article.category} ·{' '}
+                {new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium' }).format(new Date(article.created_at))}
+              </p>
+              <button
+                onClick={() => togglePublished(article)}
+                className="mt-2 px-2.5 py-1 rounded-full text-xs font-semibold"
+                style={{
+                  background: article.published ? '#DCFCE7' : '#F3F4F6',
+                  color: article.published ? '#16A34A' : '#6B7280',
+                }}
+              >
+                {article.published ? 'Published' : 'Draft'}
+              </button>
+            </div>
+          )}
+        />
       )}
 
       <ConfirmDialog

@@ -48,13 +48,13 @@ export default function VideosListPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-extrabold" style={{ color: '#0A2A8A' }}>
           Video Terbaru
         </h1>
         <Link
           href="/admin/videos/new"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white w-full sm:w-auto"
           style={{ background: '#0A2A8A' }}
         >
           <Plus size={16} />
@@ -65,9 +65,13 @@ export default function VideosListPage() {
       {loading ? (
         <p className="text-sm text-gray-400">Memuat...</p>
       ) : (
-        <DataTable headers={['Thumbnail', 'Judul', 'Platform', 'Aktif', 'Aksi']} empty={videos.length === 0}>
-          {videos.map((video) => (
-            <tr key={video.id} className="hover:bg-gray-50">
+        <DataTable
+          headers={['Thumbnail', 'Judul', 'Platform', 'Aktif', 'Aksi']}
+          items={videos}
+          keyExtractor={(video) => video.id}
+          empty={videos.length === 0}
+          renderRow={(video) => (
+            <>
               <td className="px-4 py-3">
                 <div className="w-16 h-12 rounded-lg bg-gray-100 overflow-hidden">
                   {video.thumbnail_url && (
@@ -105,9 +109,46 @@ export default function VideosListPage() {
                   </button>
                 </div>
               </td>
-            </tr>
-          ))}
-        </DataTable>
+            </>
+          )}
+          renderCard={(video) => (
+            <div className="flex gap-3">
+              <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden shrink-0">
+                {video.thumbnail_url && (
+                  <img src={video.thumbnail_url} alt={video.title} className="w-full h-full object-cover" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 truncate">{video.title}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{platformLabels[video.platform] || video.platform}</p>
+                <button
+                  onClick={() => toggleActive(video)}
+                  className="mt-2 px-2.5 py-1 rounded-full text-xs font-semibold"
+                  style={{
+                    background: video.is_active ? '#DCFCE7' : '#F3F4F6',
+                    color: video.is_active ? '#16A34A' : '#6B7280',
+                  }}
+                >
+                  {video.is_active ? 'Aktif' : 'Nonaktif'}
+                </button>
+              </div>
+              <div className="flex flex-col gap-2 shrink-0">
+                <Link
+                  href={`/admin/videos/${video.id}/edit`}
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500"
+                >
+                  <Pencil size={16} />
+                </Link>
+                <button
+                  onClick={() => setDeleteTarget(video)}
+                  className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+        />
       )}
 
       <ConfirmDialog

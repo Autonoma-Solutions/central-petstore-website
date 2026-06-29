@@ -11,6 +11,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter()
   const isLoginPage = pathname === '/admin'
   const [checking, setChecking] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    setSidebarOpen(false)
+  }, [pathname])
 
   useEffect(() => {
     let active = true
@@ -51,11 +56,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col min-w-0">
-        <AdminHeader />
-        <main className="flex-1 p-6">{children}</main>
+    <div className="min-h-screen bg-gray-50">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="flex flex-col min-h-screen min-w-0 lg:ml-64">
+        <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
+        <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">{children}</main>
       </div>
     </div>
   )
