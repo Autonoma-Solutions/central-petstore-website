@@ -17,13 +17,13 @@ export default function HeroBanner() {
       <div className="max-w-[1600px] mx-auto px-4">
 
         {/* ── Banner image container — tinggi mengikuti aspect ratio gambar ── */}
-        <div className="relative overflow-hidden rounded-2xl w-full">
+        <div className="relative w-full">
 
           {/* Image — natural aspect ratio, no fixed height */}
           <img
             src={heroImage.src}
             alt={heroImage.alt}
-            className="w-full h-auto block"
+            className="w-full h-auto block rounded-2xl"
             loading="eager"
             onError={(e) => {
               const el = e.target as HTMLImageElement
@@ -33,8 +33,9 @@ export default function HeroBanner() {
             }}
           />
 
-          {/* ── CTA Buttons — sejajar dengan teks banner, posisi % ikut skala gambar di semua ukuran layar ── */}
-          <div className="absolute left-[6%] bottom-[16%] z-10 flex flex-wrap items-center gap-2 sm:gap-3">
+          {/* ── CTA Buttons — di bawah gambar pada mobile (teks banner sudah terlalu pendek untuk overlay),
+              overlay sejajar teks banner mulai sm ke atas ── */}
+          <div className="mt-3 sm:mt-0 sm:absolute sm:left-[6%] sm:bottom-[6%] sm:z-10 flex flex-wrap items-center gap-2 sm:gap-3">
             <Link
               href="#produk-unggulan"
               className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-white transition-opacity hover:opacity-90"
