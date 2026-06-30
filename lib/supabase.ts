@@ -21,7 +21,7 @@ export type Article = {
 export type Product = {
   id: string
   name: string
-  price: number
+  price: number | null
   image_url: string | null
   category: string | null
   description: string | null
@@ -76,7 +76,8 @@ export function slugify(text: string): string {
     .replace(/-+/g, '-')
 }
 
-export function formatRupiah(amount: number): string {
+export function formatRupiah(amount: number | null | undefined): string {
+  if (amount === null || amount === undefined) return 'Hubungi Kami'
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',

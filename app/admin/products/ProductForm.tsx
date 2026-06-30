@@ -41,7 +41,7 @@ export default function ProductForm({ id }: ProductFormProps) {
       .then(({ data }) => {
         if (data) {
           setName(data.name)
-          setPrice(String(data.price))
+          setPrice(data.price != null ? String(data.price) : '')
           setCategory(data.category || 'petshop')
           setDescription(data.description || '')
           setImageUrl(data.image_url || '')
@@ -65,7 +65,7 @@ export default function ProductForm({ id }: ProductFormProps) {
 
     const payload = {
       name,
-      price: Number(price) || 0,
+      price: price.trim() === '' ? null : Number(price),
       category,
       description,
       image_url: imageUrl || null,
@@ -102,16 +102,20 @@ export default function ProductForm({ id }: ProductFormProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Harga (Rp)</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+            Harga (Rp) <span className="text-gray-400 font-normal">(opsional)</span>
+          </label>
           <input
             type="number"
-            required
             min={0}
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            placeholder="Kosongkan jika harga belum ditentukan"
             className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
-          {price !== '' && <p className="text-xs text-gray-400 mt-1">{formatRupiah(Number(price) || 0)}</p>}
+          <p className="text-xs text-gray-400 mt-1">
+            {price !== '' ? formatRupiah(Number(price)) : 'Akan ditampilkan sebagai "Hubungi Kami"'}
+          </p>
         </div>
 
         <div>

@@ -10,11 +10,11 @@ const infoLinks = [
 ]
 
 const kategoriLinks = [
-  { label: '🐾 Petshop', href: '/petshop' },
-  { label: '🐟 Aquarium', href: '/aquarium' },
-  { label: '🎣 Pancing', href: '/pancing' },
-  { label: '💊 Kesehatan Hewan', href: '/petshop#kesehatan' },
-  { label: '🏮 Aksesoris', href: '/petshop#aksesoris' },
+  { label: '🐾 Petshop', href: '/produk?category=petshop' },
+  { label: '🐟 Aquarium', href: '/produk?category=aquarium' },
+  { label: '🎣 Pancing', href: '/produk?category=pancing' },
+  { label: '💊 Kesehatan Hewan', href: '/produk?category=petshop' },
+  { label: '🏮 Aksesoris', href: '/produk?category=petshop' },
 ]
 
 export default function Footer() {

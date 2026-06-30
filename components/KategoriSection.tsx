@@ -11,7 +11,7 @@ const categories = [
     label: 'PETSHOP',
     subtitle: 'Kebutuhan Hewan Peliharaan',
     color: '#0A2A8A',
-    href: '/petshop',
+    href: '/produk?category=petshop',
     items: [
       'Makanan Anjing',
       'Makanan Kucing',
@@ -30,7 +30,7 @@ const categories = [
     label: 'AQUARIUM',
     subtitle: 'Peralatan & Perlengkapan',
     color: '#0891B2',
-    href: '/aquarium',
+    href: '/produk?category=aquarium',
     items: [
       'Filter & Media Filter',
       'Pompa Air',
@@ -49,7 +49,7 @@ const categories = [
     label: 'PANCING',
     subtitle: 'Peralatan Memancing Pilihan',
     color: '#F57C00',
-    href: '/pancing',
+    href: '/produk?category=pancing',
     items: [
       'Joran',
       'Reel',

@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { MessageCircle } from 'lucide-react'
 import { supabase, formatRupiah, buildWaLink, type Product } from '@/lib/supabase'
 
@@ -17,10 +18,14 @@ const categoryEmoji: Record<string, string> = {
   pancing: '🎣',
 }
 
-export default function ProdukListPage() {
+function ProdukList() {
+  const searchParams = useSearchParams()
+  const requestedCategory = searchParams.get('category')
+  const initialCategory = categories.some((c) => c.value === requestedCategory) ? requestedCategory! : 'all'
+
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const [category, setCategory] = useState('all')
+  const [category, setCategory] = useState(initialCategory)
 
   useEffect(() => {
     ;(async () => {
@@ -119,5 +124,19 @@ export default function ProdukListPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function ProdukListPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-[1600px] mx-auto px-4 py-12 md:py-16">
+          <p className="text-sm text-gray-400">Memuat...</p>
+        </div>
+      }
+    >
+      <ProdukList />
+    </Suspense>
   )
 }
