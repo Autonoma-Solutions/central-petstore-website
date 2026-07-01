@@ -1,8 +1,8 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState, FormEvent } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { MessageCircle } from 'lucide-react'
+import { Search, X, MessageCircle } from 'lucide-react'
 import { supabase, formatRupiah, buildWaLink, type Product } from '@/lib/supabase'
 
 const categories = [
@@ -21,11 +21,14 @@ const categoryEmoji: Record<string, string> = {
 function ProdukList() {
   const searchParams = useSearchParams()
   const requestedCategory = searchParams.get('category')
+  const requestedQ = searchParams.get('q') || ''
   const initialCategory = categories.some((c) => c.value === requestedCategory) ? requestedCategory! : 'all'
 
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState(initialCategory)
+  const [searchInput, setSearchInput] = useState(requestedQ)
+  const [activeSearch, setActiveSearch] = useState(requestedQ)
 
   useEffect(() => {
     ;(async () => {
@@ -34,20 +37,72 @@ function ProdukList() {
       if (category !== 'all') {
         query = query.eq('category', category)
       }
+      if (activeSearch.trim()) {
+        query = query.ilike('name', `%${activeSearch.trim()}%`)
+      }
       const { data } = await query
       setProducts(data || [])
       setLoading(false)
     })()
-  }, [category])
+  }, [category, activeSearch])
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault()
+    setActiveSearch(searchInput)
+  }
+
+  const clearSearch = () => {
+    setSearchInput('')
+    setActiveSearch('')
+  }
 
   return (
     <div className="max-w-[1600px] mx-auto px-4 py-12 md:py-16">
       <h1 className="text-2xl md:text-3xl font-extrabold mb-2" style={{ color: '#0A2A8A' }}>
         🛍 Semua Produk
       </h1>
-      <p className="text-sm text-gray-500 mb-8">
+      <p className="text-sm text-gray-500 mb-6">
         Produk petshop, aquarium, dan pancing dari Central Petstore.
       </p>
+
+      {/* Search bar */}
+      <form onSubmit={handleSearch} className="relative mb-4 max-w-md">
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Cari nama produk..."
+          className="w-full pl-4 pr-20 py-2.5 rounded-full border-2 text-sm outline-none transition-all"
+          style={{ borderColor: '#39A7FF' }}
+        />
+        {searchInput && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
+            <X size={16} />
+          </button>
+        )}
+        <button
+          type="submit"
+          className="absolute right-3 top-1/2 -translate-y-1/2"
+          style={{ color: '#39A7FF' }}
+        >
+          <Search size={18} />
+        </button>
+      </form>
+
+      {/* Active search label */}
+      {activeSearch && (
+        <p className="text-sm text-gray-500 mb-4">
+          Hasil pencarian:{' '}
+          <span className="font-semibold text-gray-800">"{activeSearch}"</span>
+          <button onClick={clearSearch} className="ml-2 text-xs underline" style={{ color: '#EF4444' }}>
+            Hapus
+          </button>
+        </p>
+      )}
 
       {/* Category filter */}
       <div className="flex items-center gap-2 mb-8 overflow-x-auto hide-scrollbar pb-1">
@@ -70,7 +125,19 @@ function ProdukList() {
       {loading ? (
         <p className="text-sm text-gray-400">Memuat...</p>
       ) : products.length === 0 ? (
-        <p className="text-sm text-gray-400">Belum ada produk di kategori ini.</p>
+        <div className="text-center py-16">
+          <p className="text-4xl mb-3">🔍</p>
+          <p className="text-sm text-gray-400">
+            {activeSearch
+              ? `Produk "${activeSearch}" tidak ditemukan.`
+              : 'Belum ada produk di kategori ini.'}
+          </p>
+          {activeSearch && (
+            <button onClick={clearSearch} className="mt-3 text-sm font-semibold" style={{ color: '#39A7FF' }}>
+              Tampilkan semua produk
+            </button>
+          )}
+        </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
           {products.map((product) => (

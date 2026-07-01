@@ -1,62 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import {
-  Search,
-  MessageCircle,
-  ChevronDown,
-  Menu,
-  X,
-  Home,
-} from 'lucide-react'
+import { Search, MessageCircle, Menu, X, Home } from 'lucide-react'
 
 const APP_LOGO = '/app-logo.png'
 
 const menuItems = [
-  { label: 'Beranda', href: '/', icon: <Home size={14} />, dropdown: null },
-  {
-    label: 'Petshop',
-    href: '/petshop',
-    dropdown: [
-      { label: 'Anjing', href: '/petshop#anjing' },
-      { label: 'Kucing', href: '/petshop#kucing' },
-      { label: 'Grooming', href: '/petshop#grooming' },
-      { label: 'Kesehatan', href: '/petshop#kesehatan' },
-    ],
-  },
-  {
-    label: 'Aquarium',
-    href: '/aquarium',
-    dropdown: [
-      { label: 'Filter', href: '/aquarium#filter' },
-      { label: 'Pompa', href: '/aquarium#pompa' },
-      { label: 'Lampu LED', href: '/aquarium#lampu' },
-      { label: 'Pakan Ikan', href: '/aquarium#pakan' },
-    ],
-  },
-  {
-    label: 'Pancing',
-    href: '/pancing',
-    dropdown: [
-      { label: 'Joran', href: '/pancing#joran' },
-      { label: 'Reel', href: '/pancing#reel' },
-      { label: 'Senar', href: '/pancing#senar' },
-      { label: 'Umpan', href: '/pancing#umpan' },
-    ],
-  },
-  { label: 'Promo', href: '/promo', dropdown: null },
-  { label: 'Blog & Tips', href: '/blog', dropdown: null },
-  { label: 'Tentang Kami', href: '/tentang', dropdown: null },
-  { label: 'Kontak', href: '/kontak', dropdown: null },
+  { label: 'Beranda', href: '/', icon: <Home size={14} /> },
+  { label: 'Petshop', href: '/produk?category=petshop' },
+  { label: 'Aquarium', href: '/produk?category=aquarium' },
+  { label: 'Pancing', href: '/produk?category=pancing' },
+  { label: 'Promo', href: '/promo' },
+  { label: 'Blog & Tips', href: '/blog' },
+  { label: 'Tentang Kami', href: '/tentang' },
+  { label: 'Kontak', href: '/kontak' },
 ]
 
 export default function Navbar() {
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const toggleDropdown = (label: string) => {
-    setOpenDropdown(openDropdown === label ? null : label)
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault()
+    const q = searchQuery.trim()
+    if (q) {
+      router.push(`/produk?q=${encodeURIComponent(q)}`)
+      setSearchQuery('')
+      setIsMenuOpen(false)
+    }
   }
 
   return (
@@ -70,22 +44,25 @@ export default function Navbar() {
           </Link>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-2xl">
+          <form onSubmit={handleSearch} className="flex-1 max-w-2xl">
             <div className="relative">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari produk di Central Petstore..."
                 className="w-full pl-4 pr-10 py-2 rounded-full border-2 text-sm outline-none transition-all"
                 style={{ borderColor: '#39A7FF' }}
               />
               <button
+                type="submit"
                 className="absolute right-3 top-1/2 -translate-y-1/2"
                 style={{ color: '#39A7FF' }}
               >
                 <Search size={18} />
               </button>
             </div>
-          </div>
+          </form>
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-4 shrink-0 ml-auto">
@@ -128,47 +105,14 @@ export default function Navbar() {
         <div className="max-w-[1600px] mx-auto px-4">
           <ul className="flex items-center">
             {menuItems.map((item) => (
-              <li key={item.label} className="relative group">
-                {item.dropdown ? (
-                  <>
-                    <button
-                      className="flex items-center gap-1 px-3 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
-                      onMouseEnter={() => setOpenDropdown(item.label)}
-                      onMouseLeave={() => setOpenDropdown(null)}
-                    >
-                      {item.icon}
-                      {item.label}
-                      <ChevronDown size={14} />
-                    </button>
-                    {/* Dropdown */}
-                    <div
-                      className="absolute top-full left-0 bg-white shadow-xl rounded-b-lg overflow-hidden min-w-40 z-50 transition-all"
-                      onMouseEnter={() => setOpenDropdown(item.label)}
-                      onMouseLeave={() => setOpenDropdown(null)}
-                      style={{
-                        display: openDropdown === item.label ? 'block' : 'none',
-                      }}
-                    >
-                      {item.dropdown.map((sub) => (
-                        <Link
-                          key={sub.label}
-                          href={sub.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-1 px-3 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
-                  >
-                    {item.icon}
-                    {item.label}
-                  </Link>
-                )}
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 px-3 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
+                >
+                  {'icon' in item && item.icon}
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -189,44 +133,14 @@ export default function Navbar() {
             </a>
           </div>
           {menuItems.map((item) => (
-            <div key={item.label}>
-              {item.dropdown ? (
-                <>
-                  <button
-                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 border-t border-gray-100"
-                    onClick={() => toggleDropdown(item.label)}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronDown
-                      size={16}
-                      className={`transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-                  {openDropdown === item.label && (
-                    <div className="bg-gray-50 pl-6">
-                      {item.dropdown.map((sub) => (
-                        <Link
-                          key={sub.label}
-                          href={sub.href}
-                          className="block px-4 py-2 text-sm text-gray-600"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          • {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link
-                  href={item.href}
-                  className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 border-t border-gray-100"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              )}
-            </div>
+            <Link
+              key={item.label}
+              href={item.href}
+              className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 border-t border-gray-100"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
           ))}
         </div>
       )}
