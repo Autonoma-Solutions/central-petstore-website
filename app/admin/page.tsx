@@ -28,10 +28,12 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#F5F7FA' }}>
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-8">
         <div className="text-center mb-6">
-          <p className="font-extrabold text-2xl" style={{ color: '#0A2A8A' }}>
-            Central Petstore
-          </p>
-          <p className="text-sm text-gray-400 mt-1">Admin Dashboard</p>
+          <img
+            src="/app-logo.png"
+            alt="Central Petstore"
+            className="h-20 w-auto mx-auto mb-2 object-contain"
+          />
+          <p className="text-sm text-gray-400">Admin Dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
