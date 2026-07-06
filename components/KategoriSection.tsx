@@ -74,7 +74,8 @@ export default function KategoriSection() {
           {categories.map((cat) => (
             <div
               key={cat.label}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col relative"
+              className="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col relative"
+              style={{ background: '#EEF5FF' }}
             >
               {/* Card Header — icon dalam lingkaran biru + judul UPPERCASE */}
               <div className="flex items-center gap-3 px-5 pt-5 pb-3">
@@ -116,6 +117,7 @@ export default function KategoriSection() {
                 src={cat.photo}
                 alt={cat.photoAlt}
                 className="absolute bottom-0 right-0 w-[40%] max-w-[300px] h-full object-contain object-right-bottom"
+                style={{ mixBlendMode: 'multiply' }}
                 loading="lazy"
                 onError={(e) => {
                   const el = e.target as HTMLImageElement
