@@ -21,7 +21,7 @@ export default function ProductsListPage() {
 
   const load = async () => {
     setLoading(true)
-    const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
+    const { data } = await supabase.from('products').select('id, name, description, price, image_url, category, wa_message, is_featured, created_at').order('created_at', { ascending: false })
     setProducts(data || [])
     setLoading(false)
   }

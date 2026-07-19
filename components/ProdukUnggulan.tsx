@@ -19,7 +19,7 @@ export default function ProdukUnggulan() {
   useEffect(() => {
     supabase
       .from('products')
-      .select('*')
+      .select('id, name, description, price, image_url, category, wa_message, is_featured, created_at')
       .eq('is_featured', true)
       .order('created_at', { ascending: false })
       .then(({ data }) => {

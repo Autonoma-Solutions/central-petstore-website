@@ -33,7 +33,7 @@ function ProdukList() {
   useEffect(() => {
     ;(async () => {
       setLoading(true)
-      let query = supabase.from('products').select('*').order('created_at', { ascending: false })
+      let query = supabase.from('products').select('id, name, description, price, image_url, category, wa_message, is_featured, created_at').order('created_at', { ascending: false })
       if (category !== 'all') {
         query = query.eq('category', category)
       }

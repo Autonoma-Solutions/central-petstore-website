@@ -41,7 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       active = false
       listener.subscription.unsubscribe()
     }
-  }, [isLoginPage, pathname, router])
+  }, [isLoginPage, router])
 
   if (checking) {
     return (
